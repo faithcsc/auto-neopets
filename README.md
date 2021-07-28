@@ -1,4 +1,4 @@
-# Neopets Cheats
+# Auto Neopets
 
 Automated tasks on Neopets for multiple accounts within a Docker container while connecting to Neopets through NordVPN.
 
