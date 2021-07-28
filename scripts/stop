@@ -1,0 +1,28 @@
+#!/bin/bash
+
+image_tag="neopetscheat"
+
+USER_VPN_FILE="~/username_vpn_region"
+sudo rm -rf $USER_VPN_FILE
+
+# Safely disconnect from NordVPN
+docker exec -u 0 -it $image_tag bash -c "nordvpn disconnect" >/dev/null 2>&1 && echo "Disconnected Docker from NordVPN"
+
+# Stop and remove all containers on host system
+docker stop -t 0 $image_tag >/dev/null 2>&1
+docker rm -f $image_tag >/dev/null 2>&1
+
+nordvpn disconnect >/dev/null 2>&1
+sudo py3clean . >/dev/null 2>&1
+curl ipinfo.io ; echo ""
+cd ../conf ; python3 getsum.py ; cd -
+./logs_cleanup
+
+# Check internet connectivity
+if ping -c 1 8.8.8.8 >> /dev/null; then
+    echo ""
+else
+    echo "Internet down -- rebooting in 10 seconds"
+    sleep 10
+    sudo reboot
+fi

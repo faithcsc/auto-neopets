@@ -1,0 +1,74 @@
+#!/bin/bash
+
+cd ../logs
+rename 's/ /_/g' *
+for i in $(ls *-*-*); do 
+    (
+    sed -i "/.* via .*/ d" $i
+    sed -i "/.*\[Error\].*/ d" $i
+    sed -i "/.*\[INFO\].*/ d" $i
+    sed -i "/.*ACCEPT.*/ d" $i
+    sed -i "/.*COMMIT.*/ d" $i
+    sed -i "/.*debug:.*/ d" $i
+    sed -i "/.*disconnected from NordVPN.*/ d" $i
+    sed -i "/.*docker0.*/ d" $i
+    sed -i "/.*docker1.*/ d" $i
+    sed -i "/.*eth0.*/ d" $i
+    sed -i "/.*eth1.*/ d" $i
+    sed -i "/.*filter.*/ d" $i
+    sed -i "/.*from all lookup.*/ d" $i
+    sed -i "/.*INPUT.*/ d" $i
+    sed -i "/.*IP Rules:.*/ d" $i
+    sed -i "/.*iptables-legacy.*/ d" $i
+    sed -i "/.*IPv6*/ d" $i
+    sed -i "/.*mangle.*/ d" $i
+    sed -i "/.*NordVPN is available.*/ d" $i
+    sed -i "/.*OUTPUT.*/ d" $i
+    sed -i "/.*Routing Table:.*/ d" $i
+    sed -i "/.*security.*/ d" $i
+    sed -i "/.*SIGTERM.*/ d" $i
+    sed -i "/.*tun0.*/ d" $i
+    sed -i "/.*tun1.*/ d" $i
+    sed -i "/.*would you rate your connection quality.*/ d" $i
+    sed -i "/.*You are not connected to NordVPN.*/ d" $i
+    sed -i "/\*nat.*/ d" $i
+    sed -i "/\*raw.*/ d" $i
+    sed -i "/\/sbin\// d" $i
+    sed -i "/^# / d" $i
+    sed -i "/^# Warning/ d" $i
+    sed -i "/^$/ d" $i
+    sed -i "/^-A/ d" $i
+    sed -i "/^-P/ d" $i
+    sed -i "/^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*/ d" $i
+    sed -i "/^App Version/ d" $i
+    sed -i "/.*Account Information.*/ d" $i
+    sed -i "/.*Email Address.*/ d" $i
+    sed -i "/.*VPN Service.*/ d" $i
+    sed -i "/^BUG_REPORT_URL/ d" $i
+    sed -i "/^debug/ d" $i
+    sed -i "/^filter/ d" $i
+    sed -i "/^HOME_URL=/ d" $i
+    sed -i "/^ID=/ d" $i
+    sed -i "/^IP Set/ d" $i
+    sed -i "/^IP Tables/ d" $i
+    sed -i "/^mangle/ d" $i
+    sed -i "/^NAME/ d" $i
+    sed -i "/^nat/ d" $i
+    sed -i "/^OS Info/ d" $i
+    sed -i "/.*NordVPN.*/ d" $i
+    sed -i "/^PRETTY_NAME/ d" $i
+    sed -i "/^raw/ d" $i
+    sed -i "/^security/ d" $i
+    sed -i "/^SUPPORT_URL/ d" $i
+    sed -i "/^System Info/ d" $i
+    sed -i "/^VERSION/ d" $i
+    sed -i "/^$/ d" $i
+    sed -i "/^( )*$/d" $i
+    sed -i '/^[[:space:]]*$/d' $i
+    sed -i -E "/^.{1}$/ d" $i
+    sed -i -E "/.{1}20[0-9]{2}\// d" $i
+    sed -i -E "/^.{0,1}2021\/.*$/ d" $i
+    ) & 
+done
+wait
+cd -

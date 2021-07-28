@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -x
+
+TASK_LIST=$HOME"/username_vpn_region"
+rm -f $TASK_LIST
+
+# Convert username/password/vpn city variables from python config file to bash readable file
+cd ../conf/ && (touch $TASK_LIST ; python3 generate_bash_variables.py) && cd ../data/
+
+source ../conf/secret-vpn
+
+# Check if there are usernames
+if [ -s $TASK_LIST ] ; then
+    # Login to NordVPN
+    /usr/sbin/nordvpnd & sleep 2
+    nordvpn set dns 1.1.1.1 8.8.8.8
+    # Disable showing the nordvpn login command so it won't show up in logs
+    set +x; nordvpn login --username $VPN_USERNAME --password $VPN_PASSWORD; set -x
+    nordvpn account
+
+    USER_VPN_FILE=$TASK_LIST
+    for i in $(cat $USER_VPN_FILE); do
+        items=(${i//:/ })
+        export NEO_USER=${items[1]}
+        VPN_REGION=${items[2]}
+        echo "NEO_USER="$NEO_USER
+        echo "VPN_REGION="$VPN_REGION
+        nordvpn disconnect
+        echo "py:""$i"
+        (nordvpn connect $VPN_REGION) && cd ../data/ && echo "py:""$i" && python3 main.py
+        sudo py3clean ../
+        nordvpn disconnect
+    done
+
+    nordvpn disconnect
+    sudo rm -rf $USER_VPN_FILE
+fi

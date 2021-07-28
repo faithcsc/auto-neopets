@@ -1,0 +1,27 @@
+#!/bin/bash
+
+image_tag="neopetscheat"
+data_dir="$(pwd)""/../data/"
+conf_dir="$(pwd)""/../conf/"
+
+# If already running, view logs of currently running container, don't start a new one
+if [[ $(docker container ls --filter name=neopetscheat -q | wc -l) -gt 0 ]]; then
+    docker logs -f "$image_tag"
+else
+    # Cleanup 
+    ./stop
+
+    mv ../logs/* ../../unused/logs
+
+    docker run --cap-add=NET_ADMIN --cap-add=SYS_MODULE --device /dev/net/tun \
+        --name "$image_tag" -d --network host --dns 8.8.8.8 \
+        -v $data_dir:/data/ -v $conf_dir:/conf/ \
+        -e TZ=Asia/Singapore \
+        "$image_tag"
+
+    logs_filename="../logs/"$(date +"%Y-%m-%d-%H-%M-%S")
+    docker logs -f "$image_tag" >> $logs_filename
+fi
+
+# Cleanup 
+./stop
