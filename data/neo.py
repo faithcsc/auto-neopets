@@ -253,11 +253,11 @@ class Neo:
         if referer:
             self.s.headers.update({"Referer": referer})
             
-        logging.info(self.username + " [GET] {} headers: {}".format(path, self.s.headers))
-        try:
-            logging.info(self.username + " [GET] {} cookies: {}".format(path, self.s.cookies))
-        except:
-            pass
+        # logging.info(self.username + " [GET] {} headers: {}".format(path, self.s.headers))
+        # try:
+        #     logging.info(self.username + " [GET] {} cookies: {}".format(path, self.s.cookies))
+        # except:
+        #     pass
 
         try:
             if params:
@@ -273,11 +273,11 @@ class Neo:
                 self.username, path, e))
             return None
 
-        logging.info(self.username + " [GET] {} headers: {}".format(path, self.s.headers))
-        try:
-            logging.info(self.username + " [GET] {} cookies: {}".format(path, self.s.cookies))
-        except:
-            pass
+        # logging.info(self.username + " [GET] {} headers: {}".format(path, self.s.headers))
+        # try:
+        #     logging.info(self.username + " [GET] {} cookies: {}".format(path, self.s.cookies))
+        # except:
+        #     pass
         
         if "Referer" in self.s.headers:
             del self.s.headers["Referer"]
@@ -322,11 +322,11 @@ class Neo:
             logging.debug("[POST] {} headers = {}".format(
                 path, self.s.headers))
             
-        logging.info(self.username + " [POST] {} headers: {}".format(path, self.s.headers))
-        try:
-            logging.info(self.username + " [POST] {} cookies: {}".format(path, self.s.cookies))
-        except:
-            pass
+        # logging.info(self.username + " [POST] {} headers: {}".format(path, self.s.headers))
+        # try:
+        #     logging.info(self.username + " [POST] {} cookies: {}".format(path, self.s.cookies))
+        # except:
+        #     pass
 
         for _ in range(2):
             try:
@@ -351,11 +351,11 @@ class Neo:
                 self.s.headers = originalHeaders
                 return None
             
-        logging.info(self.username + " [POST] {} headers: {}".format(path, self.s.headers))
-        try:
-            logging.info(self.username + " [POST] {} cookies: {}".format(path, self.s.cookies))
-        except:
-            pass
+        # logging.info(self.username + " [POST] {} headers: {}".format(path, self.s.headers))
+        # try:
+        #     logging.info(self.username + " [POST] {} cookies: {}".format(path, self.s.cookies))
+        # except:
+        #     pass
 
         self.s.headers = originalHeaders
 
