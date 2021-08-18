@@ -1,6 +1,6 @@
 # Auto Neopets
 
-Automated tasks on Neopets for multiple accounts within a Docker container while connecting to Neopets through NordVPN.
+Automates daily tasks on Neopets for multiple accounts, within a Docker container, while connecting to Neopets through NordVPN.
 
 Supported tasks:
 
@@ -9,22 +9,31 @@ Supported tasks:
 - Auto upgrade bank account to highest available interest rate
 - Deposit all NP on hand into bank
 
-# Requirements
+Some info redacted for privacy reasons:
 
-- Ubuntu 18.04+
-- Docker
+![Demo](images/demo.png)
+
+## Made with
+
+- [Python](https://www.python.org/downloads/)
+- [Docker](https://docs.docker.com/engine/install/ubuntu/)
+- Bash
+
+## Requirements
+
+- [Ubuntu 18.04+](https://ubuntu.com/)
+- [Docker](https://docs.docker.com/engine/install/ubuntu/)
+- [NordVPN paid account](https://nordvpn.com/pricing/)
 - Internet connection
-- NordVPN paid account
 
-# Quick start
+## Quick start
 
 1. Compile Docker image
 
 `cd container && ./rebuild-images`
 
-2. Place account passwords in `conf/secret-neopets` and NordVPN username and password in `conf/secret-vpn` in this format:
+2. Place account passwords in `conf/secret-neopets` in this format:
 
-`conf/secret-neopets`:
 ```
 {
     "username_1": {
@@ -39,16 +48,31 @@ Supported tasks:
 }
 ```
 
-`conf/secret-vpn`:
+To view the list of available NordVPN cities, first [install the NordVPN CLI](https://sleeplessbeastie.eu/2019/02/04/how-to-use-nordvpn-command-line-utility/) and then run:
+
+```
+for i in $(nordvpn countries); do
+    nordvpn cities $i
+done
+```
+
+3. Place NordVPN username and password in `conf/secret-vpn` in this format:
+
 ```
 VPN_USERNAME="bobby@gmail.com"
 VPN_PASSWORD=somePasswordHerePreferablyAlphanumericNoSpecialCharacters29
 ```
 
-3. Run the Docker image using
+4. Run the Docker image using
 
 ```
 cd scripts ; ./start
 ```
 
+NOTE: All traffic on the machine running the Docker container will be routed through whichever NordVPN connection is in use by the Docker container at the time. There is no way around this, as Docker uses the host machine's network to connect to NordVPN.
+
 Logs are stored in `logs/`.
+
+## Acknowledgements
+
+- [MajinClraik/Multi-Tool](https://github.com/MajinClraik/Multi-Tool) - provided the base functions to connect to Neopets and run Trudy / Ghoul Catchers.
