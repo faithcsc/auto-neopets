@@ -1,6 +1,6 @@
 # Auto Neopets
 
-Automates daily tasks on Neopets for multiple accounts, within a Docker container, while connecting to Neopets through NordVPN.
+Automate daily tasks on Neopets for multiple accounts, within a Docker container, while connecting to Neopets through NordVPN.
 
 Supported tasks:
 
